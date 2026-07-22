@@ -203,7 +203,76 @@ case
         when balance>25000 then "good balance"
         else "bad balance"
         end
-        as loan_Type from loans;
-	
-    
-		
+        as Account_Type from Accounts;
+        
+insert into transactions(TransactionID,transactionDate,Amount,transactionType)
+values("10111",'2025-08-07',50000,"credit"),
+("10222",'2025-01-02',50000,"cash"),
+("10333",'2025-04-07',10000,"credit"),
+("10444",'2026-08-22',55000,"cash"),
+("10555",'2025-07-07',15000,"credit"),
+("10666",'2026-08-27',20000,"cash"),
+("10777",'2025-05-07',30000,"credit");
+insert into transactions(TransactionID,transactionDate,Amount,transactionType)
+values("10888",'2024-08-17',20000,"credit"),
+("10999",'2026-06-02',10000,"UPI"),
+("10112",'2025-04-09',40000,"credit"),
+("10113",'2026-08-22',60000,"UPI"),
+("10114",'2024-08-07',80000,"UPI");
+select * from transactions;
+
+
+#windows
+#rank without partition
+select TransactionID, Amount, rank() over ( order by Amount desc) from transactions;
+select TransactionID, Amount, dense_rank() over (order by Amount desc) from transactions;
+#rank with partition
+select transactionID,Amount,transactiontype, rank() over (partition by transactiontype 
+Order by Amount desc) as typewise_ranking from transactions;
+select transactionID,Amount,transactiontype, dense_rank() over (partition by transactiontype 
+Order by Amount desc) as typewise_ranking from transactions;
+select transactionID,Amount,transactiontype, percent_rank() over (partition by transactiontype 
+Order by Amount desc) as typewise_ranking from transactions;
+
+#loans table
+select LoanID, LoanAmount, rank() over ( order by LoanAmount) from loans;
+select LoanID, LoanAmount, rank() over ( order by LoanAmount desc) from loans;
+select LoanID, LoanAmount, dense_rank() over ( order by LoanAmount desc) from loans;
+select LoanID, LoanAmount, percent_rank() over ( order by LoanAmount desc) from loans;
+update loans set LoanAmount = 7500000 where LoanID=104;
+set sql_safe_updates=0;
+
+
+#lead and lag
+select transactionID,Amount,lead(Amount) over  
+(Order by Amount desc) as lead_Amount from transactions;
+select transactionID,Amount,lag(Amount) over  
+(Order by Amount desc) as lag_Amount from transactions;
+
+#loans table
+select LoanID,LoanAmount,lead(LoanAmount) over  
+(Order by LoanAmount desc) as lead_LoanAmount from loans;
+select LoanID,LoanAmount,lag(LoanAmount) over  
+(Order by LoanAmount desc) as lag_LoanAmount from loans;
+  
+#membership
+select transactionID,TransactionType,Amount from transactions where TransactionType in("Cash","Credit");
+
+ #or
+select transactionID,TransactionType,Amount from transactions where TransactionType="Cash" or
+ TransactionType= "Credit";
+ 
+
+#having Clause 
+select min(Balance),AccountType from accounts group by AccountType;
+select min(Balance),AccountType from accounts group by AccountType order by min(Balance);
+select min(Balance),AccountType from accounts group by AccountType having (min(Balance)>22000) order by 
+min(Balance);
+
+select min(Amount),TransactionType from transactions group by TransactionType;
+select max(Amount),TransactionType from transactions group by TransactionType order by max(Amount);
+select min(Amount),TransactionType from transactions group by TransactionType having (min(Amount)>1500)
+ order by min(Amount);
+ select now();
+ select current_date();
+ 
