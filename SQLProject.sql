@@ -275,4 +275,45 @@ select min(Amount),TransactionType from transactions group by TransactionType ha
  order by min(Amount);
  select now();
  select current_date();
+ select sysdate();
+ select current_timestamp();
+ select * from customers;
+ select year(accountcreation_date) as year_of_creation from customers;
+ select month(accountcreation_date) as month_of_creation from customers;
+ select day(accountcreation_date) as day_of_creation from customers;
+ select hour(now()),minute(now()),second(now());
+ 
+ select datediff(now(),accountcreation_date) as total_days from customers;
+ select datediff(now(),accountcreation_date) as total_days from customers
+ order by total_days limit 1;
+ select * from loans;
+ select datediff(EndDate, StartDate) as duration_loan from loans;
+ select date_add(now(), interval 6 month);
+ select date_add(now(), interval 6 day);
+ select customerid,date_add(accountcreation_date, interval 6 month)
+ as lokinperiod from customers;
+  select greatest("2026-07-16","2026-08-11","2026-01-16","2026-11-26")
+ as the_gretest_value from customers limit 1;
+  select least("2026-07-16","2026-08-11","2026-01-16","2026-11-26")
+ as the_least_value from customers limit 1;
+ 
+ #string function
+ select upper(firstname), lower (lastname),
+ lower(concat(firstname," ", lastname)) as full_name from customers;
+ select length(firstname) from customers;
+ select left(firstname, 2), right(firstname, 2) from customers;
+ 
+ #mathfunction
+ select 4+7, 2-8, 4*9, 9/3, 7%4;
+ select * from accounts;
+ update accounts set Balance=Balance-15000 where AccountID= 101;
+ select round(267.45,2), floor(254.76);
+ select ceil(254.76), floor(254.76);
+ select truncate(400.590,2), round(400.590,2);
+ select abs(-456), abs(456);
+ select power(2,3);
+ select exp(3);
+ 
+ 
+ 
  
