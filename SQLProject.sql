@@ -314,6 +314,86 @@ select min(Amount),TransactionType from transactions group by TransactionType ha
  select power(2,3);
  select exp(3);
  
+ #test
+ select * from accounts;
+ select min(balance)from accounts;
+ select * from accounts order by (balance);
+  select * from accounts (balance);
+  select * from accounts
+ select AccountID,AccountType,Balance from accounts where AccountType="Current" or
+ TransactionType= "Savings";
+ select avg(Balance) from accounts;
+ select avg(Balance),AccountType from accounts;
  
+ #JOINTS
+ select * from customers;
+ select * from accounts;
  
+ select c.customerid, c.firstname,a.balance from customers c
+ inner join accounts a
+ on c.customerid=a.customerid;
+ update accounts set AccountID=12 where AccountType="Saving";
+ update customers set CustomerID=101 where FirstName="rushi";
+ set sql_safe_updates=0;
+ update customers set CustomerID=102 where FirstName="dayasagar";
+ update customers set CustomerID=103 where FirstName="sumit";
+ select c.customerid, c.firstname,a.balance from customers c
+ inner join accounts a
+ on c.customerid=a.customerid;
+update accounts set AccountID=12 where AccountType="Saving";
+update accounts set CustomerID=102 where AccountType="Current";
+ select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid;
+ select c.customerid, c.firstname,a.balance from customers c
+ right join accounts a
+ on c.customerid=a.customerid
+ ALTER TABLE transactions
+ add  column CustomerID INT
+ ALTER TABLE transactions
+ add  column CustomerID INT
+ insert into transactions(CustomerID) values (101),(102),(103)
+ select * from transactions;
  
+ select c.CustomerID, c.Firstname,t.amount, t.transactionDate from customers c
+ inner join transactions t on  c.customerid= t.customerid where c.customerid=2;
+ alter table transactions
+   add CustomerID varchar(20)
+   
+   
+   select * from transactions;
+   select * from transactions;
+ 
+ update transactions set CustomerID=101 where TransactionID="10111";
+ update transactions set CustomerID=102 where TransactionID="10222";
+ update transactions set CustomerID=103 where TransactionID="10333";
+ update transactions set CustomerID=101 where TransactionID="10444";
+ update transactions set CustomerID=102 where TransactionID="10555";
+ update transactions set CustomerID=103 where TransactionID="10666";
+ update transactions set CustomerID=101 where TransactionID="10777";
+ update transactions set CustomerID=105 where TransactionID="10888";
+ update transactions set CustomerID=104 where TransactionID="10999";
+ select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid union;
+ select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid union;
+ select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid;
+ select c.customerid, c.firstname,a.balance from customers c
+ right join accounts a 
+ 
+  select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid union
+ select c.customerid, c.firstname,a.balance from customers c
+ right join accounts a
+ on c.customerid=a.customerid;
+  select c.customerid, c.firstname,a.balance from customers c
+ left join accounts a
+ on c.customerid=a.customerid union
+ select c.customerid, c.firstname,a.balance from customers c
+ right join accounts a
+ on c.customerid=a.customerid;
