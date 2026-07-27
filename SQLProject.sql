@@ -397,3 +397,96 @@ update accounts set CustomerID=102 where AccountType="Current";
  select c.customerid, c.firstname,a.balance from customers c
  right join accounts a
  on c.customerid=a.customerid;
+ 
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c join transactions t
+ on c.customerid= t.customerid;
+ 
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  right join transactions t
+ on c.customerid= t.customerid;
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  left join transactions t
+ on c.customerid= t.customerid;
+  
+  select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  right join transactions t
+ on c.customerid= t.customerid union
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  left join transactions t
+ on c.customerid= t.customerid;
+ 
+ #cross join
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  cross join transactions t
+ on c.customerid= t.customerid;
+ select c.customerid, c.firstname,c.lastname,t.TransactionDate,t.Amount
+ from customers c  cross join transactions t;  without on
+ 
+ #group by using joins
+
+ select c.customerid, sum(t.Amount)from customers c 
+ inner join transactions t
+ on c.customerid= t.customerid
+ group by c.customerid;
+ 
+ select c.customerid, max(a.balance)from customers c 
+ inner join accounts a
+ on c.customerid= a.customerid
+ group by c.customerid;
+
+select * from accounts  max(balance);
+select * from accounts  max(balance);
+select max(balance);
+select max(Balance) from accounts;
+
+#subquery
+
+select * from accounts having
+balance = (select max(balance) from accounts);
+select * from accounts having
+balance > (select avg(balance) from accounts);
+select * from transactions having
+amount > (select avg(amount) from transactions);
+select avg(amount) from transactions;
+
+select c.customerid, min(a.balance)from customers c 
+ inner join accounts a
+ on c.customerid= a.customerid
+ having
+balance > (select min(balance) from accounts);
+
+select c.customerid,c.firstname, c.lastname, min(a.balance)from customers c 
+ inner join accounts a
+ on c.customerid= a.customerid
+ group by c.customerid;
+ 
+ select c.customerid, c.firstname, min(a.balance)from customers c 
+ inner join accounts a
+ on c.customerid= a.customerid
+ 
+select customerid, min(balance) from accounts having
+amount = (select min(amount) from accounts);
+select customerid, min(balance) from accounts 
+amount = (select min(amount) from accounts);
+
+ 
+select customerid, Balance from accounts having
+balance = (select max(balance) from accounts);
+
+select customerid, Balance from accounts having
+balance = (select min(balance) from accounts);
+
+select * from customer
+where customerid in (select customerid from accounts where balance in 
+select max(balance) from accounts));
+
+select * from customers
+where customerid in (select customerid from accounts where balance =
+(select max(balance) from accounts));
+ 
+ select * from customers
+where customerid in (select customerid from accounts where balance =
+(select min(balance) from accounts));
+select * from accounts;
+  
