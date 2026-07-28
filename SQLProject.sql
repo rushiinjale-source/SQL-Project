@@ -489,4 +489,74 @@ where customerid in (select customerid from accounts where balance =
 where customerid in (select customerid from accounts where balance =
 (select min(balance) from accounts));
 select * from accounts;
+
+#views
+create view top_5 as
+Select AccountID,Balance from accounts order by Balance desc limit 5;
+select * from top_5;
+Select LoanID,LoanAmount from Loans order by LoanAmount desc limit 6;
+select * from top_5;
+
+Select TransactionID,CustomerID,Amount from Transactions order by Amount desc limit 2;
+select * from top_5;
+create view top_2 as
+select c.customerid, c.firstname,c.lastname,t.transactionid,t.TransactionDate,t.Amount
+ from customers c join transactions t
+ on c.customerid= t.customerid
+ order by amount desc limit 2;
+ select * from top_2;
+ 
+ #create or replace
+ 
+ #Index
+ create index idx_firstname on customers(customerid);
+ describe customers;
+ select idx_firstname from customers;
+ select email,phone from customers where idx_firstname="kajal";
+
+#ifnull
+select ifnull(email, "Not Available") from customers;
+select if(year(now())=2025, "Current Year", "Previous Year");
+select Balance,if(Balance>40000, "Maintained", "Not Maintained") from accounts;
+
+#row_number
+select accountid, Balance, row_number() over (order by Balance)
+from accounts;
+
+select accountid, Balance, sum(Balance) over (order by Balance)
+as running_total 
+from accounts;
+
+select accountid, Balance,AccountTYpe, row_number() over (partition by AccountType order by Balance desc)
+from accounts;
+
+update transactions set Amount=null  where Transactionid="10111";
+set sql_safe_updates=0;
+select * from transactions;
+update transactions set Amount=null  where Transactionid="10333";
+update transactions set Amount=null  where Transactionid="10555";
+
+
+select c.customerid, c.firstname,c.lastname,t.transactionid,t.TransactionDate,t.Amount
+ from customers c join transactions t
+ on c.customerid= t.customerid
+where Amount is null;
+
+#3tablejoins
+
+select c.customerid, c.firstname,c.lastname,t.transactionid,t.TransactionDate,t.Amount,a.balance
+ from customers c join transactions t
+ on c.customerid= t.customerid
+ join accounts a
+ on c.customerid=a.customerid
+ where a.balance>40000;
+ 
+ #selfjoin
+ 
+ select c.firstname, o.email, o.phone from customers c
+ join customers o on
+ c.customerID= o.customerID;
+ 
+
+
   
